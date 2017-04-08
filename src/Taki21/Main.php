@@ -28,12 +28,39 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
       if(!$s instanceof Player){
         $s->sendMessage(C::RED."This Command Can Only by used by Players");
       }else{
-        //blah
+        if(isset($args[0]){
+          switch(strtolower($args[0])){
+            case "mk":
+            break;
+      
+            case "del":
+            break;
+      
+            case "edit":
+            break;
+        
+            case "as":
+            break;
+      
+            case "rs":
+            break;
+          
+            case "tp":
+            break;
+        
+            case "mkgen":
+            break;
+        
+            case "delgen":
+            break;
+              
+            case "help":
+            break;
+          }
+        }else{
+          $s->sendMessage(C::RED."Please Provide Arguments or do /bw help");
+        }
       }  
-    }
-    switch(strtolower($args[0])){
-      case "":
-      break;
     }
     return true;
   }
