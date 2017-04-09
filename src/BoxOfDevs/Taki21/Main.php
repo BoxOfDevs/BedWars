@@ -1,6 +1,6 @@
 <?php
 
-namespace Taki21;
+namespace BoxOfDevs\Taki21;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
