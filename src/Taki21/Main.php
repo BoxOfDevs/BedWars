@@ -12,6 +12,11 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as C;
 use pocketmine\utils\Config;
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\block\Block;
 
 class Main extends Pluginbase implements Listener { // pretty sure this is how u do it...
   
@@ -63,6 +68,27 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
       }  
     }
     return true;
+  }
+           
+  public function bedDestruction(BlockBreakEvent $block){
+    //$color;
+    $b = $block->getBlock();
+    $pl = $block->getPlayer();
+    $pname = $pl->getName();
+    $bname = $b->getName();
+    $lvl = strtolower($pl->getLevel()->getName());
+    $clvl = $this->config->get("worlds");
+    foreach($clvl as $world){
+      if($bname == "Bed" && $lvl == $world){
+        if($world instanceof Level){
+          foreach($world->getPlayers() as $wpl){
+            $wpl->sendMessage(C::RED."$pname Destroyed $color Team Bed!");
+          }
+        }else{
+          $pl->sendMessage(C::RED."Error!");
+        }
+      }
+    }
   }
   
   public function onDisable(){
