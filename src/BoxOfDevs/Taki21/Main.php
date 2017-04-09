@@ -1,5 +1,7 @@
 <?php
 
+// CREATED BY TAKI21 BUT UNDER THE BOXOFDEVS LICENSE
+
 namespace BoxOfDevs\Taki21;
 
 use pocketmine\command\Command;
@@ -21,14 +23,17 @@ use pocketmine\block\Block;
 class Main extends Pluginbase implements Listener { // pretty sure this is how u do it...
   
   public function onLoad(){
-    // cya later code
+    $this->getLogger()->info(C::GOLD."Loading Bedwars...");
   }
   
   public function onEnable(){
-    // cya later code
+    $this->getServer()->getPluginManager()->registerEvents($this,$this);
+		$this->getLogger()->info(C::GREEN."BedWars - (By Taki21), Enabled.");
+		@mkdir($this->getDataFolder());
+		$this->config = new Config($this->getDataFolder(). "config.yml", Config::YAML);
   }  
   
-  public function onCommand(CommandSender $s, Command $cmd, $label, array $args){ //wut
+  public function onCommand(CommandSender $s, Command $cmd, $label, array $args){ 
     if(strtolower($cmd->getName() == "bw")){
       if(!$s instanceof Player){
         $s->sendMessage(C::RED."This Command Can Only by used by Players");
@@ -71,7 +76,16 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
   }
            
   public function bedDestruction(BlockBreakEvent $block){
-    //$color;
+    /*
+    Red Bed Data = 0
+    Blue Bed Data = 1
+    Gold Bed Data = 2
+    Green Bed Data = 3
+    Yellow Bed Data = 4
+    Aqau Bed Data = 5
+    White Bed Data = 6
+    Black Bed Data = 7
+    */
     $b = $block->getBlock();
     $pl = $block->getPlayer();
     $pname = $pl->getName();
@@ -82,7 +96,41 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
       if($bname == "Bed" && $lvl == $world){
         if($world instanceof Level){
           foreach($world->getPlayers() as $wpl){
-            $wpl->sendMessage(C::RED."$pname Destroyed $color Team Bed!");
+            $beds = $this->config->get("$lvl_beds");
+            foreach($beds as $bed){
+              $dmg = $bname->getDamage();
+              if($dmg == 0){
+                $wpl->sendMessage(C::RED."$pname Destroyed Red Teams Bed!");
+              }else{
+                if($dmg == 1){
+                  $wpl->sendMessage(C::RED."$pname Destroyed Blue Teams Bed!");
+                }else{
+                  if($dmg == 2){
+                    $wpl->sendMessage(C::RED."$pname Destroyed Gold Teams Bed!");
+                  }else{
+                    if($dmg == 3){
+                      $wpl->sendMessage(C::RED."$pname Destroyed Green Teams Bed!");
+                    }else{
+                      if($dmg == 4){
+                        $wpl->sendMessage(C::RED."$pname Destroyed Yellow Teams Bed!");
+                      }else{
+                        if($dmg == 5){
+                          $wpl->sendMessage(C::RED."$pname Destroyed Aqua Teams Bed!");
+                        }else{
+                          if($dmg == 6){
+                            $wpl->sendMessage(C::RED."$pname Destroyed White Teams Bed!");
+                          }else{
+                            if($dmg == 7){
+                              $wpl->sendMessage(C::RED."$pname Destroyed Black Teams Bed!");
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }else{
           $pl->sendMessage(C::RED."Error!");
@@ -92,7 +140,7 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
   }
   
   public function onDisable(){
-    // cya later code
+    $this->getLogger()->info(C::RED."Disabled BedWars");
   }  
   
 }
