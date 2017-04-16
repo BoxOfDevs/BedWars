@@ -1,6 +1,6 @@
 <?php
 
-// CREATED BY TAKI21 BUT UNDER THE BOXOFDEVS LICENSE
+// CREATED BY TAKI21 plz dont eat meh
 
 namespace BoxOfDevs\Taki21;
 
@@ -41,9 +41,18 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
         if(isset($args[0]){
           switch(strtolower($args[0])){
             case "mk":
+							if(!isset($args[1]));
+								$s->sendMessage(C::RED."/bw mk <name>");
+								$s->sendMessage(C::RED."<name> can be any name specified, doesnt need to be world name");
+							}else{
+								$map = strtolower($args[1]);
+								$level = $s->getLevel()->getName();
+								$this->config->set();
+							}
             break;
       
             case "del":
+							
             break;
       
             case "edit":
@@ -52,7 +61,7 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
             case "as":
             break;
       
-            case "rs":
+            case "ds":
             break;
           
             case "tp":
@@ -86,6 +95,9 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
     White Bed Data = 6
     Black Bed Data = 7
     */
+    
+    // TOO LAZY TO USE SWITCH I LIEK COPY AND PASTE OK?!  
+	  
     $b = $block->getBlock();
     $pl = $block->getPlayer();
     $pname = $pl->getName();
