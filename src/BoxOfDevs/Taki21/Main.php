@@ -142,5 +142,4 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
   public function onDisable(){
     $this->getLogger()->info(C::RED."Disabled BedWars");
   }  
-  
 }
