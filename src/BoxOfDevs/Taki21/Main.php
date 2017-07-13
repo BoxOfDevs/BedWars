@@ -35,54 +35,39 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
   
   public function onCommand(CommandSender $s, Command $cmd, $label, array $args){ 
     if(strtolower($cmd->getName() == "bw")){
-      if(!$s instanceof Player){
-        $s->sendMessage(C::RED."This Command Can Only by used by Players");
+      if(!$s instanceof Player && !$isset($args[0])){
+        $s->sendMessage(C::RED."ERROR, You aren't a player or you didn't provide command arguments.");
       }else{
-        if(isset($args[0]){
-          switch(strtolower($args[0])){
-            case "mk":
-							if(!isset($args[1]));
-								$s->sendMessage(C::RED."/bw mk <name>");
-								$s->sendMessage(C::RED."<name> can be any name specified, doesnt need to be world name");
-							}else{
-								$map = strtolower($args[1]);
-								$level = $s->getLevel()->getName();
-								$this->config->set();
-							}
-            break;
-      
-            case "del":
-							
-            break;
-      
-            case "edit":
-            break;
-        
-            case "as":
-            break;
-      
-            case "ds":
-            break;
-          
-            case "tp":
-            break;
-        
-            case "mkgen":
-            break;
-        
-            case "delgen":
-            break;
-              
-            case "help":
-            break;
-          }
-        }else{
-          $s->sendMessage(C::RED."Please Provide Arguments or do /bw help");
-        }
-      }  
-    }
-    return true;
-  }
+      	switch(strtolower($args[0])){
+        	case "mk":		
+					if(!isset($args[1])){
+					$s->sendMessage(C::RED."/bw mk <name>");
+					$s->sendMessage(C::RED."<name> can be any name specified, doesnt need to be world name");
+					}else{
+						$map = strtolower($args[1]);
+						$level = $s->getLevel()->getName();
+						$this->config->set($map[$level]);
+						$this->config->save();
+						$s->sendMessage(C::GREEN."Success! Now add the spawnpoints of the players! /bw add <color>");
+						$this->map = $map
+					}
+          break;
+					case "add":
+					if(!isset($args[1])){
+						$s->sendMessage(C::RED."/bw add <color>")
+						$s->sendMessage(C::RED."Examples: Red, Yellow, Blue, Green, etc...);
+					}else{
+						$x = $s->getX();
+						$y = $s->getY();
+						$z = $s->getZ();
+						$bmap = $this->config->get($this->map);
+						$this->config->set(array_push($bmap, "x"[$x], "y"[$y], "z"[$z]));
+					}
+					break;	
+				}
+			}
+		}
+	}
            
   public function bedDestruction(BlockBreakEvent $block){
     /*
@@ -95,60 +80,9 @@ class Main extends Pluginbase implements Listener { // pretty sure this is how u
     White Bed Data = 6
     Black Bed Data = 7
     */
-    
-    // TOO LAZY TO USE SWITCH I LIEK COPY AND PASTE OK?!  
-	  
-    $b = $block->getBlock();
-    $pl = $block->getPlayer();
-    $pname = $pl->getName();
-    $bname = $b->getName();
-    $lvl = strtolower($pl->getLevel()->getName());
-    $clvl = $this->config->get("worlds");
-    foreach($clvl as $world){
-      if($bname == "Bed" && $lvl == $world){
-        if($world instanceof Level){
-          foreach($world->getPlayers() as $wpl){
-            $beds = $this->config->get("$lvl_beds");
-            foreach($beds as $bed){
-              $dmg = $bname->getDamage();
-              if($dmg == 0){
-                $wpl->sendMessage(C::RED."$pname Destroyed Red Teams Bed!");
-              }else{
-                if($dmg == 1){
-                  $wpl->sendMessage(C::RED."$pname Destroyed Blue Teams Bed!");
-                }else{
-                  if($dmg == 2){
-                    $wpl->sendMessage(C::RED."$pname Destroyed Gold Teams Bed!");
-                  }else{
-                    if($dmg == 3){
-                      $wpl->sendMessage(C::RED."$pname Destroyed Green Teams Bed!");
-                    }else{
-                      if($dmg == 4){
-                        $wpl->sendMessage(C::RED."$pname Destroyed Yellow Teams Bed!");
-                      }else{
-                        if($dmg == 5){
-                          $wpl->sendMessage(C::RED."$pname Destroyed Aqua Teams Bed!");
-                        }else{
-                          if($dmg == 6){
-                            $wpl->sendMessage(C::RED."$pname Destroyed White Teams Bed!");
-                          }else{
-                            if($dmg == 7){
-                              $wpl->sendMessage(C::RED."$pname Destroyed Black Teams Bed!");
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }else{
-          $pl->sendMessage(C::RED."Error!");
-        }
-      }
-    }
+		
+		// REWRITING THIS PART!
+		
   }
   
   public function onDisable(){
